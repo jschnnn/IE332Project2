@@ -1,5 +1,4 @@
 library(tidyverse)
-library(keras)
 library(tensorflow)
 library(reticulate)
 install_tensorflow(extra_packages="pillow")
