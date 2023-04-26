@@ -1,4 +1,0 @@
-salt <- function(image) {
-    x <- imnoise(RGB2gray(x), type="saltnpepper", epsilon = 0.1)
-    x <- as.cimg(x)
-    }

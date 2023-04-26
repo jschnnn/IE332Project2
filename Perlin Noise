@@ -1,0 +1,10 @@
+#algorithm
+perlnoise <- function(image, freq) {
+    dim1 <- dim(image)
+    d <- c(dim1[1], dim1[2], dim1[3])
+    noise <- noise_perlin(dim=d, frequency=freq)
+    noise <- array(c(noise, d[4]), dim = dim1)
+    x <- image + 10*noise
+    print(dim(x))
+    print(class(x))
+    }
