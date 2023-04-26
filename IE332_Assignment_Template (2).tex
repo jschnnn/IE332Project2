@@ -112,13 +112,13 @@ Accountable together -- we are Purdue.''}
     \item[\done] Your solutions were prepared using the \LaTeX template provided in Brightspace. 
     \item[\done] Your submission has a cover sheet as its first page and this checklist as its second page, according to the template provided.
 	 \item All of your solutions (program code, etc.) are included in the submission as requested. % Check this checkbox and the following ones if satisfied <---
-    \item You have not included any screen shots, photos, etc. (plots should be intermediately saved as .png files and then added into your .tex file). % <---
-	 \item All math notation and algorithms (algorithmic environment) are created using appropriate \LaTeX code (no pictures, handwritten solutions, etc.). % <---
-    \item The .pdf is submitted as an individual file and not in a {\tt .zip}.
-    \item You kept the \LaTeX source code in your files until this assignment is graded, in case you are required to show proof of creating your assignment using \LaTeX.  % <---
-    \item If submitting with a partner, your partner is added in the submission section in Gradescope after you upload your file. % <---
-    \item You have correctly matched each question to its page \# in the .pdf submission in the Gradescope section (after you uploaded your file).
-    \item Watch videos on creating pseudocode if you need a refresher or quick reference to the idea. These are good starter videos:    % <---
+    \item[\done] You have not included any screen shots, photos, etc. (plots should be intermediately saved as .png files and then added into your .tex file). % <---
+	 \item[\done] All math notation and algorithms (algorithmic environment) are created using appropriate \LaTeX code (no pictures, handwritten solutions, etc.). % <---
+    \item[\done] The .pdf is submitted as an individual file and not in a {\tt .zip}.
+    \item[\done] You kept the \LaTeX source code in your files until this assignment is graded, in case you are required to show proof of creating your assignment using \LaTeX.  % <---
+    \item[\done] If submitting with a partner, your partner is added in the submission section in Gradescope after you upload your file. % <---
+    \item[\done] You have correctly matched each question to its page \# in the .pdf submission in the Gradescope section (after you uploaded your file).
+    \item[\done] Watch videos on creating pseudocode if you need a refresher or quick reference to the idea. These are good starter videos:    % <---
     
      \HREF{https://www.youtube.com/watch?v=4jLO0vXPktU}{www.youtube.com/watch?v=4jLO0vXPktU} 
     
@@ -155,6 +155,10 @@ We developed five sub-algorithms for our main algorithm to choose from. Each one
 \paragraph{Fast Gradient Sign Method} \hspace{0pt} \\
 
 The Fast Gradient Sign Method (FGSM) is a white box adversarial attack that utilizes the gradient of the cost function, taken with respect to the input. Because the cost function of the model is needed, this form of attack can only be used where access to the model is given. This method, even with changing less than one percent of pixels in the image, can fool a classifier with over 99\% confidence (Goodfellow et al., 2014). Due to the information, and the relative simplicity and universality of the algorithm, the FGSM was a sound choice for one of our sub-algorithms. 
+
+\paragraph{Projected Gradient Descent} \hspace{0pt} \\
+
+The Projected Gradient Descent (PGD) method is another type of white box iterative attack, meaning the attacker can access a copy of the victim model’s weights. In a PGD attack, the attacker calculates the gradient of the loss function iteratively with respect to the input. It then disturbs the input in the direction of this known gradient. To keep the resulting adversarial example acceptable to the model, the disturbance is projected onto the set of allowable inputs. Because this attack is iterative, it is able to fine-tune weights to ensure it is maximizing the disturbances' impact while also minimizing its detectability. This two-front attack makes PGD attacks one of the most effective methods to fool a machine learning model.
 
 \section{Weight Optimization}
 
