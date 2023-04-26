@@ -32,7 +32,7 @@ showstringspaces=false
 \newcommand{\problemnumber}{0}
 \pagestyle{fancy}
 \fancyhead{}
-\fancyhead[L]{\textbf{Question \problemnumber}}
+\fancyhead[L]{\textbf{ \problemnumber}}
 \newcommand{\newquestion}[1]{
 \clearpage % page break and flush floats
 \renewcommand{\problemnumber}{#1} % set problem number for header
@@ -142,20 +142,33 @@ Accountable together -- we are Purdue.''}
 % BEGIN YOUR ASSIGNMENT HERE:
 
 % Question 1
-\newquestion{1}
+\newquestion{Main}
 
-\noindent Example of proper typesetting of quotation marks:\\
-``proper opening and closing quotation marks'' vs "bad quotation marks".
+\paragraph{Introduction} \hspace{0pt} \\
 
-% Question 2
-\newquestion{2}
+With the rise of machine learning, image classifiers have become an integral part of automatization in many industries: medicine, security, and transportation, for example. Despite this, the classifiers are flawed; many algorithms can exploit these flaws and cause the misclassification of objects. Our team has researched many of these algorithms and designed an adversarial attack to fool the given classifier. Our attack consists of five sub-algorithms coordinated by a main algorithm to improve the likeliehood of fooling the classifier with any given image. By attempting to break the model, we have gained a better understanding of how image classification and machine learning algorithms work under the surface.
 
-Example of how to typeset and submit code in Latex:
-\begin{lstlisting}[language=R, frame=single]
-#EXAMPLE R CODE
-x <- c(1,2,3)
-\end{lstlisting}
+\paragraph{Sub-Algorithms} \hspace{0pt} \\
+
+We developed five sub-algorithms for our main algorithm to choose from. Each one uses a different method to try and fool the classifier, so the diversity of pros and cons gives our main algorithm the flexibility to choose the most effective for a given image.
+
+\paragraph{Fast Gradient Sign Method} \hspace{0pt} \\
+
+The Fast Gradient Sign Method (FGSM) is a white box adversarial attack that utilizes the gradient of the cost function, taken with respect to the input. Because the cost function of the model is needed, this form of attack can only be used where access to the model is given. This method, even with changing less than one percent of pixels in the image, can fool a classifier with over 99\% confidence (Goodfellow et al., 2014). Due to the information, and the relative simplicity and universality of the algorithm, the FGSM was a sound choice for one of our sub-algorithms. 
+
+\newquestion{Main}
+
+\begin{center}
+\textbf{References}
+\end{center}
+
+\begin{hangparas}
+
+Goodfellow, I. J., Shlens, J., \& Szegedy, C. (2014). \textit{Explaining and harnessing adversarial examples. arXiv preprint arXiv:1412.6572.}
+
+\end{hangparas}
+
+
 
 
 \end{document}
-
