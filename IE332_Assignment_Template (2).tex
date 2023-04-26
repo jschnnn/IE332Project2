@@ -156,6 +156,20 @@ We developed five sub-algorithms for our main algorithm to choose from. Each one
 
 The Fast Gradient Sign Method (FGSM) is a white box adversarial attack that utilizes the gradient of the cost function, taken with respect to the input. Because the cost function of the model is needed, this form of attack can only be used where access to the model is given. This method, even with changing less than one percent of pixels in the image, can fool a classifier with over 99\% confidence (Goodfellow et al., 2014). Due to the information, and the relative simplicity and universality of the algorithm, the FGSM was a sound choice for one of our sub-algorithms. 
 
+\section{Weight Optimization}
+
+\paragraph{Hill Climbing Optimization} \hspace{0pt} \\
+
+Hill climbing is an optimization method that iteratively evaluates the neighboring solutions of the current solution and selects the best one. If the algorithm finds a new solution, it will move to that and do that for the new solution. This process is then repeated until a solution is found where no further improvement can be made. As far as adversarial attacks go, hill climbing can be used to optimize the perturbations made to an image based on the pixel budget. The perturbation will move through the image and iteratively update it to fool the classifier even more with each iteration. This will further confuse the algorithm until there is no better solution. The downside to using this is that if the algorithm reaches a local optimal solution, it can get stuck there. Since it is being compared to nearby solutions and not all solutions, it can get stuck in this position as it does not identify any nearby solutions.
+
+\paragraph{Random Search Optimization} \hspace{0pt} \\
+
+Random search optimization is a very straightforward optimization method that selects random potential solutions and evaluates their performance. It does not rely on nearby local solutions; it relies on the global solutions of the space. The algorithm will keep generating random solutions until a certain constraint blocks it from continuing. In the context of adversarial attacks, the random search can produce random perturbations of an image and then evaluate the performance of that perturbation. This can then be optimized to find the best-performing perturbation, and it will continue to find perturbations until a better one is found. The only downside to this is that if the image is large, it will require a large number of iterations. Even if the iterations are high, it will take a lot of computational power to run through that many iterations as the algorithm does not run locally, it runs globally throughout the whole image.
+
+\paragraph{Genetic Optimization} \hspace{0pt} \\
+
+Genetic optimization is an optimization algorithm that references natural evolution to find an optimal solution. It does this by having a population of potential solutions and applying evolutionary operations such as mutations and crossovers. In the context of adversarial attacks, genetic optimization can be used to optimize the perturbations made to an image to maximize the success rate of the attacks. It first finds a population of random perturbations. It then applies the perturbations to an image and evaluates the performance. From these evaluations, it will find the best-performing ones and perform either a mutation or a crossover. The mutation will introduce a new random change in the perturbation. The crossover will combine any 2 random perturbations. Using either one of these, it will update this back into the original image and continue these steps for however many iterations, or until an acceptable solution is found. The downfall to this is that you must manually input and tune the parameters, such as the population size, probabilities for crossovers or mutations, and evaluation of performance. It can also be computationally powerful, making it less efficient.
+
 \newquestion{Main}
 
 \begin{center}
