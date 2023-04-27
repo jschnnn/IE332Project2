@@ -1,10 +1,56 @@
-#algorithm
-perlnoise <- function(image, freq) {
+library(tidyverse)
+library(keras)
+library(tensorflow)
+library(reticulate)
+library(SpatialPack)
+library(imager)
+library(ambient)
+
+#load model
+model=load_model_tf("/home/jupyter/332_data/dandelion_model")
+
+#set size
+width <- 224
+height<- 224
+target_size <- c(width, height)
+rgb <- 3 #color channels
+
+#test on grass images
+f=list.files("/home/jupyter/332_data/data-for-332/grass/")
+for (i in f){
+test_image <- image_load(paste("/home/jupyter/332_data/data-for-332/grass/",i,sep=""), target_size = target_size)
+x <- image_to_array(test_image)
+x <- perlnoise(x,100)
+x <- array_reshape(x, c(1, dim(x)))
+x <- x/255
+pred <- model %>% predict(x)
+if(pred[1,2]<0.50){
+ print(i)
+ print(pred)
+}
+}
+
+#test on dandelion images
+f=list.files("/home/jupyter/332_data/data-for-332/dandelions/")
+for (i in f){
+test_image <- image_load(paste("/home/jupyter/332_data/data-for-332/dandelions/",i,sep=""), target_size = target_size)
+x <- image_to_array(test_image)
+x <- perlnoise(x,100)
+x <- array_reshape(x, c(1, dim(x)))
+x <- x/255
+pred <- model %>% predict(x)
+if(pred[1,1]<0.50){
+ print(i)
+ print(pred)
+}
+}
+
+#algorithm to add perlin noise to an image
+#the input "factor" is a constant value that the noise will be multiplied by before adding to the image
+perlnoise <- function(image, factor) {
     dim1 <- dim(image)
     d <- c(dim1[1], dim1[2], dim1[3])
-    noise <- noise_perlin(dim=d, frequency=freq)
+    noise <- noise_perlin(dim=d, frequency=0.1)
     noise <- array(c(noise, d[4]), dim = dim1)
-    x <- image + 10*noise
-    print(dim(x))
-    print(class(x))
+    x <- image + factor*noise
     }
