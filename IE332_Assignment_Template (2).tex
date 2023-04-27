@@ -156,23 +156,102 @@ With the rise of machine learning, image classifiers have become an integral par
 
 \paragraph{White Box Attacks} \hspace{0pt} \\
 
+A white box attack is a category of attack where the attack being implemented has full access to the classifier model. Full access means having access to the weights and the architecture of the attack. The weights help with determining the strength of the attack, which helps certain optimization algorithms to minimize the perturbations. These attacks involve computing the gradients of the model’s output. These gradients are then used on the image to fool the classifier model. There are four types of white bx attacks: Targeted vs. untargeted, Optimization-based, Gradient-based, and Generative attacks.
+\begin{itemize}
+  \item Targeted vs. Untargeted:
+  \begin{itemize}
+  \item Targeted attacks occur when the attacker’s goal is to alter the input of the model in a certain way or manner, so that the prediction changes
+  \item Untargeted attacks occur when the attacker wants to just cause the classifier to be fooled, regardless of the way it is done
+\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+  \item Optimization-Based:
+  \begin{itemize}
+  \item Optimization-based attacks focus on optimizing the problem at hand. It does so by minimizing the number of perturbations, to make sure the model is fooled successfully. The C&W attack is an example of this type
+\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+  \item Gradient-Based:
+  \begin{itemize}
+  \item Gradient-based attacks exploit the gradients of a model. They use these gradients to generate perturbations to the input image, which fools the classifier model. Some common types are FGSM, PDG, and DeepFool.
+\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+  \item Generative Attacks:
+  \begin{itemize}
+  \item Generative attacks leverage generative models to fool a classifier. The model is trained in a way where there are two users, one generator, and one discriminator. The generator tries to create adversarial examples, and the discriminator tries to tell the difference between the two. This process is iterated until the model is fooled.
+\end{itemize}
+\end{itemize}
+
 \paragraph{Black Box Attacks} \hspace{0pt} \\
 
-\paragraph{Gray Box Attacks} \hspace{0pt} \\
+Black box attacks are a category of attack where the attacker only has access to the input and the output of the model, not the actual model. They do not know the architecture of the model or any other information. These can be split up into 4 types:
+\begin{itemize}
+  \item Query-based:
+  \begin{itemize}
+  \item In this, the attacker queries the model with different input images. They observe the behavior of how the attack works and create their own adversarial image that mimics what the actual model does. This is then used to attack the real model
+\end{itemize}
+\end{itemize}
 
-Grey box attacks refer to a type of machine learning attack where attackers have access to only some information about the model. Intuitively, they are easier to defend against than white box attacks, but harder to defend against than black box attacks due to the assailant’s level of knowledge. In grey box attacks, the saboteur could have information on the underlying algorithms, defense mechanisms, or model topology, but has no access to the defender’s parameters. The attacker could even potentially have access to a similar learned model with similar architecture but different parameters and weights. Grey box attacks incorporate adversarial training from white box attacks with transfer learning from black box, making defense against them a formidable task. 
+\begin{itemize}
+  \item Transfer-based:
+  \begin{itemize}
+  \item  The attacker in this trains a separate model using a different architecture which generates its own adversarial image. These are then used to attack the model, as they are easily transferable
+\end{itemize}
+\end{itemize}
 
-\paragraph{Comparison} \hspace{0pt} \\
+\begin{itemize}
+  \item Score-based attacks:
+  \begin{itemize}
+  \item This type of attack uses the model’s confidence scores. This also assumes the attacked has access to this information from the model. The use the scores to create an adversarial example by optimizing the perturbation based on the scores
+\end{itemize}
+\end{itemize}
 
-\subsection{Implementations}
+\begin{itemize}
+  \item Decision-based attacks:
+  \begin{itemize}
+  \item This type of attack is when the attacker has access to the final prediction for each input. Using multiple optimization techniques, you can iteratively modify the input until the prediction changes.
+\end{itemize}
+\end{itemize}
+
+\paragraph{Grey Box Attacks} \hspace{0pt} \\
+
+Grey box attacks refer to a type of machine learning attack where attackers have access to only some information about the model. Intuitively, they are easier to defend against than white box attacks, but harder to defend against than black box attacks due to the assailant’s level of knowledge. In grey box attacks, the saboteur could have information on the underlying algorithms, defense mechanisms, or model topology, but has no access to the defender’s parameters. The attacker could even potentially have access to a similar learned model with similar architecture but different parameters and weights. Grey box attacks incorporate adversarial training from white box attacks with transfer learning from black box, making defense against them a formidable task.
+
+\subsection{Attack Implementations}
 
 \paragraph{Fast Gradient Sign Method} \hspace{0pt} \\
 
-The Fast Gradient Sign Method (FGSM) is a white box adversarial attack that utilizes the gradient of the cost function, taken with respect to the input. Because the cost function of the model is needed, this form of attack can only be used where access to the model is given. This method, even with changing less than one percent of pixels in the image, can fool a classifier with over 99\% confidence (Goodfellow et al., 2014). Due to the information, and the relative simplicity and universality of the algorithm, the FGSM was a sound choice for one of our sub-algorithms. 
+The Fast Gradient Sign Method (FGSM) is a white box adversarial attack that utilizes the gradient of the cost function, taken with respect to the input. Because the cost function of the model is needed, this form of attack can only be used where access to the model is given. This method, even with changing less than one percent of pixels in the image, can fool a classifier with over 99\% confidence (Goodfellow et al., 2014). Due to the information, and the relative simplicity and universality of the algorithm, the FGSM is a sound choice for an attack.
 
 \paragraph{Projected Gradient Descent} \hspace{0pt} \\
 
 The Projected Gradient Descent (PGD) method is another type of white box iterative attack, meaning the attacker can access a copy of the victim model’s weights. In a PGD attack, the attacker calculates the gradient of the loss function iteratively with respect to the input. It then disturbs the input in the direction of this known gradient. To keep the resulting adversarial example acceptable to the model, the disturbance is projected onto the set of allowable inputs. Because this attack is iterative, it is able to fine-tune weights to ensure it is maximizing the disturbances' impact while also minimizing its detectability. This two-front attack makes PGD attacks one of the most effective methods to fool a machine learning model.
+
+\paragraph{Gaussian Noise} \hspace{0pt} \\
+
+\paragraph{Perlin Noise} \hspace{0pt} \\
+
+\paragraph{Random Noise} \hspace{0pt} \\
+
+Random noise attacks are a type of black box attack that seeks to disrupt machine learning systems by adding random noise to input data. This black box attack involves an attacker adding random values uniformly across the input space to perturb the model's output, aiming to cause the system to make incorrect predictions. The attacker can adjust the magnitude and type of noise added to maximize the impact of the attack. Implementing a random noise attack is relatively easy, which makes them a popular choice for attackers looking to disrupt machine learning systems. However, the effectiveness of the attack can depend on factors such as the quality of the noise added and the type of model being targeted, requiring attackers to experiment with different strategies to find the best attack method.
+
+\paragraph{Salt and Pepper Noise} \hspace{0pt} \\
+
+The addition of salt and pepper noise can serve as a simple and somewhat effective black box attack. Otherwise known as “impulse noise”, salt and pepper noise adds scattered black and white pixels causing sharp disturbances in images. Research shows that proper adjustment of the parameters can result in a 100\% success rate of fooling a classifier with salt and pepper noise (Li, Xurong, et al., 2019).
+\paragraph{UAP attack} \hspace{0pt} \\
+
+Universal Adversarial Perturbation (UAP) attack is a type of white box that looks to find a single perturbation vector that tries to successfully fool a classifier model. The perturbation is generated by iteratively optimizing the vector to maximize the classifier model. During the perturbation process, there is a magnitude associated, which makes sure the image is still visibly the same but fools the classifier. A higher magnitude might yield higher success in fooling the classifier, but the image might not be recognizable to a human as the attack would have changed the image too much. UAP attacks are efficient as they generate single perturbations which can work on many inputs and can be used in scenarios with limited computational power. They can also generalize well across different types of input images, showing the versatility this attack has.
+\paragraph{C\&W attack} \hspace{0pt} \\
+
+The Carlini & Wagner (C&W) attack is an adversarial attack that aims at solving an optimization problem to find the smallest possible perturbation. The main idea is to minimize the distortion of the input image while also maximizing the probability of fooling the classifier model. It works by first defining a loss function that combines the model’s classification outputs and the distortion of each image. This loss function is the function that is minimized. Using this loss function, the attack needs to use a perturbation method to minimize the loss function, and the perturbation method can be a gradient-based method. It is an iterative process, which loops through the loss function to find the optimal solution. Once the solution converges at the optimal value, the adversarial image is found by adding this to the input image.
+
+\paragraph{DeepFool attack} \hspace{0pt} \\
+
+DeepFool is a type of white box attack that looks at trying to find the smallest number of perturbations to an input image. It works by computing the gradient of the classifier’s output, with respect to the input. It then linearizes the classifier and finds the minimal amount of perturbations required to change the decision boundary. This causes the image to be perturbed, and the new image is fed back into the original model classifier. This process is iterated through however many times the user wants, and until the image is fooled. The attack has full access to the model, making the perturbations easy to optimize. DeepFool is known for its ability to make an image visually unchanged, making the attack a good way to fool a classifier model. However, since the perturbations are made through iterations, it can be computationally expensive and can take a lot of time.
 
 \section{Weight Optimization}
 
@@ -188,6 +267,17 @@ Random search optimization is a very straightforward optimization method that se
 
 Genetic optimization is an optimization algorithm that references natural evolution to find an optimal solution. It does this by having a population of potential solutions and applying evolutionary operations such as mutations and crossovers. In the context of adversarial attacks, genetic optimization can be used to optimize the perturbations made to an image to maximize the success rate of the attacks. It first finds a population of random perturbations. It then applies the perturbations to an image and evaluates the performance. From these evaluations, it will find the best-performing ones and perform either a mutation or a crossover. The mutation will introduce a new random change in the perturbation. The crossover will combine any 2 random perturbations. Using either one of these, it will update this back into the original image and continue these steps for however many iterations, or until an acceptable solution is found. The downfall to this is that you must manually input and tune the parameters, such as the population size, probabilities for crossovers or mutations, and evaluation of performance. It can also be computationally powerful, making it less efficient.
 
+\paragraph{Simulated Annealing (SA) Optimization} \hspace{0pt} \\
+
+Simulated Annealing is a stochastic optimization algorithm, which is inspired by the annealing process. The annealing process is the heating and then slowly cooling of a material, to reduce the erosion and damage to its structural properties. The algorithm works in a similar way buy searching for an optimal solution, with the chance of accepting a not-as-good solution, similar to when the temperature decreases in annealing. In the context of adversarial attacks, an SA algorithm can be used to determine and combine the weights in a majority classifier. The SA algorithm will start with an initial combination of weights. It will then iteratively generate new combinations and evaluate the performance in fooling the classifier. It asses both the better combination and the worse combination with a certain probability. By iterating through this process, the algorithm will find the optimal combination of weights that maxims performance. One thing to note with SA is that it does not always find the global optimal value. This would mean a higher number of iterations would be required to have a better chance that it does find the global optimum.
+
+\section{Weighted Majority Classifier}
+
+A weighted majority classifier is a method that combines the predictions of multiple classifiers. Each classifier has a weight assigned to it, and the weighted sum of the individual classifier’s prediction determines the final classification. These weights are usually based on the classifier’s individual performance first, and then after it is evaluated and assigned a weight. The main goal is to achieve the highest accuracy by optimizing the weights and finding the best possible combinations of weights. In the context of adversarial attacks, the classifier is used to combine the results of the five attacks. Each attack has a weight assigned to it, and the weights are determined based on the performance of the individual attack.
+
+The way of evaluating attacks is done separately, with a separate function evaluating the performance. The score is calculated by checking if the image classifier is fooled. The way to tell if it is fooled is if the image is tricked into thinking it is not what it is; in other words, the confidence of the image should be less than 49\%. The weights are then optimized based on the evaluation in a separate function. The function will iteratively refine the weights assigned to the attacks, which will be maximized based on the score from the evaluation. The weights are also iterated through, meaning if a higher weight exists after a certain number of iterations, it will be updated. We implemented a random search optimization method to find the optimal weights. For each iteration, random perturbations are added to the weight to create new weights if the perturbation performs better than the previous one. This is then generated into an adversarial image and evaluated with a score. If the score is higher, it will replace the current score, and the random search is repeated for the number of iterations inputted.
+
+
 \newquestion{Main}
 
 \begin{center}
@@ -198,12 +288,26 @@ Genetic optimization is an optimization algorithm that references natural evolut
 
 Goodfellow, I. J., Shlens, J., \& Szegedy, C. (2014). \textit{Explaining and harnessing adversarial examples. arXiv preprint arXiv:1412.6572.}
 
+Li, X., Ji, S., Han, M., Ji, J., Ren, Z., Liu, Y., \& Wu, C. (2019). Adversarial examples versus cloud-based detectors: A black-box empirical study. \textit{IEEE Transactions on Dependable and Secure Computing, 18(4)}, 1933-1949.
+
 \end{hangparas}
 
 \newquestion{Appendix A}
 \begin{center}
 \textbf{Appendix A: Solution}
 \end{center}
+
+Combining the results of all attacks and producing an adversarial image did not yield the results we wanted. When the functions are run separately, the PGD function does very well in fooling the classifier. It successfully does this for all of the images. The other methods do not do a good job of fooling the classifier, especially for the grass images. Some of them work for the dandelion images, but the grass ones seem to be the trickiest ones to fool. Having a combination of all attacks will not yield similar results to just running the PGD attack, as you are combining the results of all attacks. 
+
+When running all the algorithms by themselves, we found that the PGD attack had very good success in fooling the classifier, and the results were very convincing. As our final solution, we feel that having just the PGD attack does the best job. The weighted majority classifier does not work as we want it to, and there looks to be an issue with the weights being assigned. As intended, the classifier is meant to assign weights based on the performance of the attack.
+
+Theoretically, if the PGD attack has the best success rate, the weight assigned to the PGD must be the highest. This is not the case, as the weighting seems to be split somewhat evenly between all five algorithms. This could come down to the optimization method. The random search optimization method is useful when the search space is not too large, or not too complex. In this case, loading an image with thousands of pixels might be too complex. A more advanced optimization method, like hill climbing optimization or genetic optimization, could have yielded better results in our case. 
+
+There could also be an issue with the number of iterations as well. Running just one iteration of the weighted majority attack took a long time. Ideally, you would want around 50 or 100 iterations to make sure your optimization has enough sample data to make enough perturbations to the image. We ran only one iteration, meaning the optimization was only run once. This means the algorithm could not even run another time to check for better weights to replace the previous one. Not only would that number of iterations be computationally expensive, but it would also take too long for us to evaluate.
+
+Our final solution for fooling the classifier is to run the PGD attack by itself, without the weighted classifier. We have discussed that the weighted classifier does not work the way we want it to, and for this case, we are looking at it from purely a performance perspective. The PGD attack works with a 100\% rate for all images and takes less time to run. The PGD attack works very convincingly too, the confidence values when outputting them are all 1, and the other are extremely small values. This means it fools the classifier into thinking a dandelion image is a grass image with 100\% confidence, even though 51\% is enough to successfully fool it.
+
+ It would not make sense to compromise the effectiveness of the PGD attack by combining it with other attacks, which have been tested and have shown to be not as effective, or even effective at fooling the classifier at all. If we were to make an optimization method that we know works, and we know prioritizes performance that highly, it would be useless. This is because the weights assigned would always be very high for the PGD attack, and it would waste computational power trying to find the best-performing one and iterating through each attack, as the best-performing one will always be the PGD attack. The attack is faster to run, easier to implement, and provided the best results you can. The only way better results can be found is by making it faster, as the performance cannot be any better.
 
 \newquestion{Appendix B}
 \begin{center}
