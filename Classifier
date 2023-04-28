@@ -1,0 +1,94 @@
+# Load in required libraries
+library(tidyverse)
+library(keras)
+library(tensorflow)
+library(reticulate)
+
+#Set working directory
+setwd("C:/Users/adity/OneDrive/Documents/IE332 Project 2")
+#Load in pre-trained model
+model <- load_model_tf("./dandelion_model")
+
+weighted_majority_attack <- function(image, pixel_budget, weights) {
+  # Make sure input image is a TensorFlow tensor
+  image <- tf$constant(image)
+  # Call attack functions with modified pixel budget values based on weights
+  fgsm_image <- fgsm_attack(image, model, pixel_budget * weights[1])
+  pgd_image <- pgd_attack(model, image, 0, pixel_budget * weights[2], 0.01, 10)
+  random_noise_image <- random_noise(image$numpy(), pixel_budget * weights[3])
+  gaussian_noise_image <- gaussian_noise(image$numpy(), stddev = pixel_budget * weights[4])
+  # Combine attack results by computing weighted sum of adversarial images
+  adversarial_image <- (fgsm_image * weights[1] + pgd_image * weights[2] +
+  random_noise_image * weights[3] + gaussian_noise_image * weights[4] / sum(weights))
+  # Clip combined adversarial image to valid input range
+  adversarial_image <- tf$clip_by_value(adversarial_image, 0, 1)
+  # Return generated adversarial image
+  return(adversarial_image)
+}
+
+evaluate_attack <- function(adv_image, image, model) {
+  # Get model's prediction for adversarial image
+  pred_adv <- model %>% predict(adv_image)
+  # Check if classifier is fooled by comparing predicted probability
+  fooled_classifier <- pred_adv[1, 2] < 0.50
+  # Convert fooled_classifier result to numeric value
+  fooled_classifier_numeric <- ifelse(fooled_classifier, 1, 0)
+  # Compute difference between adversarial image and original image
+  img_diff <- adv_image - image
+  # Convert image difference tensor to array
+  img_diff_array <- as.array(img_diff)
+  # Calculate attack evaluation score by subtracting mean absolute difference from the 'fooled_classifier_numeric' value
+  score <- fooled_classifier_numeric - sum(abs(img_diff_array)) / length(img_diff_array)
+  # Return attack evaluation score
+  return(score)
+}
+
+optimize_weights <- function(image, model, pixel_budget, initial_weights, num_iterations) {
+  # Initialize the best_weights to the initial_weights
+  best_weights <- initial_weights
+  best_score <- -Inf
+  # Iterate through specified number of iterations
+  for (i in 1:num_iterations) {
+    # Update weights by adding random value scaled by 0.1
+    weights <- best_weights + 0.1 * runif(length(best_weights), min = -1, max = 1)
+    # Ensure weights are non-negative
+    weights <- pmax(weights, 0)
+    # Normalize weights to make them sum to 1
+    weights <- weights / sum(weights)
+    # Generate adversarial image using 'weighted_majority_attack' function with updated weights
+    adv_image <- weighted_majority_attack(image, pixel_budget, weights)
+    # Evaluate attack using 'evaluate_attack' function
+    score <- evaluate_attack(adv_image, image, model)
+    # If current weights result in a better score, update 'best_weights' and 'best_score'
+    if (score > best_score) {
+      best_score <- score
+      best_weights <- weights
+    }
+  }
+  return(best_weights)
+}
+
+#OUTPUT CODE
+target_size = c(224, 224)
+res = c("", "")
+f = list.files("./test_images")
+initial_weights <- c(1, 1, 1, 1, 1)
+num_iterations <- 1
+for (i in f) {
+  test_image <- image_load(paste("./test_images/", i, sep=""),
+                           target_size = target_size)
+  x <- image_to_array(test_image)
+  x <- array_reshape(x, c(1, dim(x)))
+  x <- x / 255
+  # Optimize weights using optimization function
+  pixel_budget <- 0.01
+  optimal_weights <- optimize_weights(x, model, pixel_budget, initial_weights, num_iterations)
+  # Use the optimal weights in weighted majority attack
+  adv_x <- weighted_majority_attack(x, pixel_budget, optimal_weights)
+  # Predict using the adversarial image
+  pred <- model %>% predict(adv_x)
+  print(pred)
+  if (pred[1, 2] < 0.50) {
+    print(i)
+  }
+}
