@@ -233,6 +233,8 @@ The Projected Gradient Descent (PGD) method is another type of white box iterati
 
 \paragraph{Gaussian Noise} \hspace{0pt} \\
 
+
+
 \paragraph{Perlin Noise} \hspace{0pt} \\
 
 Invented by Ken Perlin in the 1980s, Perlin noise was originally used for computer generated effects to create textures and terrain without needing to be hand drawn. The noise allowed Perlin to make realistic looking digital art including clouds, landscapes, and textures found in nature like marble. Compared to Random noise, Perlin noise has an organic appearance due to its use of pseudo-random numbers that are naturally ordered (Shiffman).  As a result, the noise that appears in images is smooth and without unnatural looking bumps. This medium of data augmentation is useful for this specific project because the images being used are found in nature.
@@ -244,12 +246,6 @@ Random noise attacks are a type of black box attack that seeks to disrupt machin
 \paragraph{Salt and Pepper Noise} \hspace{0pt} \\
 
 The addition of salt and pepper noise can serve as a simple and somewhat effective black box attack. Otherwise known as “impulse noise”, salt and pepper noise adds scattered black and white pixels causing sharp disturbances in images. Salt and pepper noise creates challenges when attempting to detect image edges, segment pixels, extract certain features, or in this case, recognize an image.  Research shows that proper adjustment of the parameters can result in a 100\% success rate of fooling a classifier with salt and pepper noise (Li, Xurong, et al., 2019).
--	Replacing percentage of random pixels with either black or white noisy pixels
--	In control of what percentage of pixels are changed
--	Results in “sharp and sudden disturbances” that cause the image classifier to be thrown off. 
--	More successful when noise density increases 
--	Creates a challenge when attempting to detect image edges, segment pixels, extract certain features, or in this case, recognize an image. 
-
 
 \paragraph{UAP attack} \hspace{0pt} \\
 
