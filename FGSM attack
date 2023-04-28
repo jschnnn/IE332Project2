@@ -1,0 +1,51 @@
+fgsm_attack <- function(image, model, epsilon) {
+  # Convert the input image to a TensorFlow tensor
+  image <- tf$constant(image)
+  epsilon <- 0.05
+  # Define nested function to compute the gradient of the loss with respect to the input image
+  with_gradient <- function(image) {
+    with(tf$GradientTape() %as% tape, {
+      tape$watch(image)
+      # Compute the model's prediction
+      prediction <- model(image)
+      # Get the class indices of the highest predicted probability
+      class_indices <- tf$argmax(prediction, axis = as.integer(1))
+      # Convert class indices to one-hot encoded labels
+      depth <- tf$cast(tf$shape(prediction)[as.integer(-1)], dtype=tf$int32)
+      one_hot_labels <- tf$one_hot(class_indices, depth)
+      # Compute loss value using softmax cross-entropy with logits
+      loss_value <- tf$reduce_sum(tf$nn$softmax_cross_entropy_with_logits(one_hot_labels, prediction))
+    })
+    # Return gradient of loss value with respect to input image and loss value
+    list(tape$gradient(loss_value, image), loss_value)
+  }
+  # Compute gradient
+  gradients <- with_gradient(image)[[1]]
+  # Compute perturbation using Fast Gradient Sign Method attack
+  perturbation <- epsilon * tf$sign(gradients)
+  # Add perturbation to input image and clip resulting adversarial image to valid input range [0, 1]
+  adversarial_image <- tf$clip_by_value(image + perturbation, 0, 1)
+  # Return generated adversarial image
+  return(adversarial_image)
+}
+
+
+target_size = c(224,224)
+ res=c("","")
+ f=list.files("./test_images")
+for (i in f) {
+  test_image <- image_load(paste("./test_images/", i, sep=""),
+                           target_size = target_size)
+  x <- image_to_array(test_image)
+  x <- array_reshape(x, c(1, dim(x)))
+  x <- x / 255
+  # Applying FGSM attack
+  epsilon <- 0.05 
+  adversarial_x <- fgsm_attack(x, model, epsilon)
+  adversarial_x <- as.array(adversarial_x)
+  pred <- model %>% predict(adversarial_x)
+  print(pred)
+  if (pred[1, 2] < 0.50) {
+    print(i)
+  }
+}
