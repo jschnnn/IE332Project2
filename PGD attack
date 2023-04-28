@@ -1,0 +1,59 @@
+pgd_attack <- function(model, x, y, epsilon = 0.1, alpha = 0.01, num_iter = 40) {
+  # Nested function to compute the loss value between the model's predictions and true labels
+  loss_function <- function(model, x, y) {
+    # Convert the y to one-hot format
+    y <- tf$one_hot(tf$cast(y, dtype = tf$int32), tf$cast(2, dtype = tf$int32))
+    # Get the model's logits for input 'x'
+    logits <- model(x)
+    logits <- tf$squeeze(logits)
+    # Create a categorical cross-entropy loss object
+    loss_object <- tf$losses$CategoricalCrossentropy(from_logits = FALSE, reduction = 'none')
+    # Compute the loss value between y and predicted logits
+    loss_value <- loss_object(y, logits)
+    return(loss_value)
+  }
+  x_adv <- x
+  epsilon <- 0.1
+  alpha <- 0.01
+  num_iter <- 40
+  # Iterate through the number of attack iterations
+  for (i in 1:num_iter) {
+    # Record gradients of the loss value with respect to x_adv
+    with(tf$GradientTape() %as% tape, {
+      tape$watch(x_adv)
+      loss_value <- loss_function(model, x_adv, y)
+    })
+    # Compute gradients
+    gradient <- tape$gradient(loss_value, x_adv)
+    # Get sign of the gradients
+    sign_grad <- tf$sign(gradient)
+    # Update adversarial example using the signed gradients and step size 'alpha'
+    x_adv <- x_adv + alpha * sign_grad
+    # Clip adversarial perturbations to be within a range of 'epsilon'
+    delta <- x_adv - x
+    delta <- tf$clip_by_value(delta, -epsilon, epsilon)
+    # Combine x with the clipped perturbations
+    x_adv <- x + delta
+    # Clip the adversarial example to input range [0, 1]
+    x_adv <- tf$clip_by_value(x_adv, 0, 1)
+  }
+  # Return the generated adversarial as a numpy array
+  return(x_adv$numpy())
+}
+
+target_size = c(224,224)
+res=c("","")
+f=list.files("./test_images")
+for (i in f){
+    test_image <- image_load(paste("./test_images/",i,sep=""), target_size = target_size)
+    x <- image_to_array(test_image)
+    x <- array_reshape(x, c(1, dim(x)))
+    x <- x/255
+    y <- model %>% predict(x) %>% which.max() - 1
+    x_adv <- pgd_attack(model, tf$constant(x), y, epsilon, alpha, num_iter)
+    pred_adv <- model %>% predict(x_adv)
+    print(pred_adv)
+    if(pred_adv[1,2]<0.50){
+        print(i)
+    }
+}
