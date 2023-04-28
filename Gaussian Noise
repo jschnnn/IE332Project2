@@ -1,0 +1,30 @@
+gaussian_noise <- function(image, mean = 0.5, stddev = 0.25) {
+  # Generate a Gaussian noise array with the same dimensions as the input image
+  noise <- array(rnorm(length(image), mean = mean, sd = stddev), dim(image))
+  # Add the generated Gaussian noise to the image
+  noisy_image <- image + noise
+  # Clip pixel values greater than 1 to 1
+  noisy_image[noisy_image > 1] <- 1
+  # Clip pixel values less than 0 to 0
+  noisy_image[noisy_image < 0] <- 0
+  # Return the noisy image with values in the range [0, 1]
+  return(noisy_image)
+}
+
+target_size = c(224,224)
+res=c("","")
+f=list.files("./test_images")
+for (i in f) {
+  test_image <- image_load(paste("./test_images/", i, sep = ""),
+                           target_size = target_size)
+  x <- image_to_array(test_image)
+  x <- array_reshape(x, c(1, dim(x)))
+  x <- x / 255
+  # Add Gaussian noise
+  x_noisy <- gaussian_noise(x)
+  pred <- model %>% predict(x_noisy)
+  print(pred)
+  if (pred[1, 2] < 0.50) {
+    print(i)
+  }
+}
