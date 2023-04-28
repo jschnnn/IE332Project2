@@ -1,3 +1,8 @@
+library(tidyverse)
+library(keras)
+library(tensorflow)
+library(reticulate)
+
 gaussian_noise <- function(image, mean = 0.5, stddev = 0.25) {
   # Generate a Gaussian noise array with the same dimensions as the input image
   noise <- array(rnorm(length(image), mean = mean, sd = stddev), dim(image))
