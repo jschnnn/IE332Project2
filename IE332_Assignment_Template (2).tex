@@ -292,13 +292,32 @@ The way of evaluating attacks is done separately, with a separate function evalu
 
 \begin{hangparas}
 
+Arc. (2019, May 18). \textit{DeepFool - a simple and accurate method to fool deep neural networks}. Medium. Retrieved April 28, 2023, from https://towardsdatascience.com/deepfool-a-simple-and-accurate-method-to-fool-deep-neural-networks-17e0d0910ac0 
+
+Boesch, G. (2023, January 2). What is adversarial machine learning? attack methods in 2023. viso.ai. Retrieved April 28, 2023, from \textit{https://viso.ai/deep-learning/adversarial-machine-learning/}
+
+Gomes, J. (2018, January 17). Adversarial attacks and defences for Convolutional Neural Networks. Medium. Retrieved April 28, 2023, from \textit{https://medium.com/onfido-tech/adversarial-attacks-and-defences-for-convolutional-neural-networks-66915ece52e7}
+
 Goodfellow, I. J., Shlens, J., \& Szegedy, C. (2014). \textit{Explaining and harnessing adversarial examples. arXiv preprint arXiv:1412.6572.}
 
-Lendave, V. (2021, September 22). \textit{A guide to different types of noises and image denoising methods}. Analytics India Magazine. https://analyticsindiamag.com/a-guide-to-different-types-of-noises-and-image-denoising-methods/#:~:text=Gaussian%20noise%20has%20a%20uniform,distribution%20has%20a%20bell%20shape. 
+Knagg, O. (2019, January 6). Know your enemy. Medium. Retrieved April 28, 2023, from \textit {\\https://towardsdatascience .com/know-your-enemy-7f7c5038bdf3#:~:text=adversarially\%20robust\%20model.-,Projected\%20Gradient\%20Descent
+\%20(PGD),copy\%20of\%20your\%20model's\%20weights.}
+
+Lendave, V. (2021, September 22). \textit{A guide to different types of noises and image denoising methods}. Analytics India Magazine. https://analyticsindiamag.com/a-guide-to-different-types-of-noises-and-image-denoising-methods/#:~:text=Gaussian\%20noise\%20has\%20a\%20uniform,distribution\%20has\%20a\%20bell
+\%20shape. 
+
+Li, S., Huang, G., Xu, X., \& Lu, H. (2022). Query-based black-box attack against medical image segmentation. \textit{Future Generation Computer Systems, 133}, 331-337.
+
+Liu, D. (2022, December 7). \textit{Black-box score-based attacks on images}. KejiTech. Retrieved April 28, 2023, from https://davideliu.com/2020/06/17/black-box-score-based-attacks-on-images/ 
 
 Li, X., Ji, S., Han, M., Ji, J., Ren, Z., Liu, Y., \& Wu, C. (2019). Adversarial examples versus cloud-based detectors: A black-box empirical study. \textit{IEEE Transactions on Dependable and Secure Computing, 18(4)}, 1933-1949.
 
+Rosebrock, A. (2021, April 17). Adversarial attacks with FGSM (fast gradient sign method). PyImageSearch. Retrieved April 28, 2023, from \textit {https://pyimagesearch.com/2021/03/01/adversarial-attacks-with-fgsm-fast-gradient-sign-method/}
+
+Schroeder, W. (2022, April 26). \textit{Learning machine learning part 2: Attacking white box models}. Medium. Retrieved April 28, 2023, from https://posts.specterops.io/learning-machine-learning-part-2-attacking-white-box-models-1a10bbb4a2ae 
+
 Shiffman, D. (n.d.). \textit{Perlin Noise}. Khan Academy. https://www.khanacademy.org/computing/computer-programming/programming-natural-simulations/programming-noise/a/perlin-noise 
+
 \end{hangparas}
 
 \newquestion{Appendix A}
@@ -332,9 +351,12 @@ The primary loop invariant is that the perturbation of ''x\_adv'' stays within t
 
 The main loop invariant rely on the weights and the score. For each iteration, the weights vectors must contain non-negative values that sum to 1, ensuring that the weights remain valid throughout the algorithm. Also, the ''best\_score'' and ''best\_weights'' variables are updated whenever a higher score is discovered, ensuring that these variables always represent the highest discovered score throughout the process.
 \\
+\\
 Initialization: Before the loop starts, best\_weights is initialized to initial\_weights, and best\_score is initialized to -Inf. Here, no better weights and scores can be found, so the invariant holds.
 \\
+\\
 Maintenance: During each iteration, the function generates a new set of weights, creates an adversarial image using those weights, and evaluates the attack. If the new score is better than best\_score, the best\_weights and best\_score variables are updated. This ensures that at the beginning of the next iteration, the invariant still holds because the best weights and scores found are stored in those variables.
+\\
 \\
 Termination: When the loop terminates, the invariant holds because best\_weights and best\_score still store the best set of weights and the score found during the iterations. The function then returns the best\_weights, which is the output.
 
@@ -465,6 +487,7 @@ Combining these, the overall runtime is O(1*(2w + 8n + 2m + 40(m+n))). In this c
       Gaussian Noise & 0 & 100\\
       Perlin Noise & 0 & 37 \\
       Random Noise & 0 & 5.2 \\
+      Weighted Majority*** & 0 & 100\\
       \hline
     \end{tabular}
     \\
@@ -473,5 +496,7 @@ Combining these, the overall runtime is O(1*(2w + 8n + 2m + 40(m+n))). In this c
 
 \setlength{\parindent}{0cm}
 *Percent fooled was taken by using all 49 given grass images and all 38 given dandelion images then dividing the number fooled by number of images
-
+\\
+**Due to their long runtimes, our sample for PGD and weighted majority consisted of 3 images for grass and 3 images for dandelions; these are approximations
 \end{document}
+
