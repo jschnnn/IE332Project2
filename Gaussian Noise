@@ -1,7 +1,13 @@
+# Load in required libraries
 library(tidyverse)
 library(keras)
 library(tensorflow)
 library(reticulate)
+
+#Set working directory
+setwd("C:/Users/adity/OneDrive/Documents/IE332 Project 2")
+#Load in pre-trained model
+model <- load_model_tf("./dandelion_model")
 
 gaussian_noise <- function(image, mean = 0.5, stddev = 0.25) {
   # Generate a Gaussian noise array with the same dimensions as the input image
