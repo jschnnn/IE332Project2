@@ -150,9 +150,9 @@ Accountable together -- we are Purdue.''}
 
 With the rise of machine learning, image classifiers have become an integral part of automatization in many industries: medicine, security, and transportation, for example. Despite this, the classifiers are flawed; many algorithms can exploit these flaws and cause the misclassification of objects. Our team has researched many of these algorithms and designed an adversarial attack to fool the given classifier. By attempting to break the model, we have gained a better understanding of how image classification and machine learning algorithms work under the surface.
 
-\section{Attack Algorithms}
+\section*{Attack Algorithms}
 
-\subsection{Types of Attacks}
+\subsection*{Types of Attacks}
 
 \paragraph{White Box Attacks} \hspace{0pt} \\
 
@@ -221,7 +221,7 @@ Black box attacks are a category of attack where the attacker only has access to
 
 Grey box attacks refer to a type of machine learning attack where attackers have access to only some information about the model. Intuitively, they are easier to defend against than white box attacks, but harder to defend against than black box attacks due to the assailant’s level of knowledge. In grey box attacks, the saboteur could have information on the underlying algorithms, defense mechanisms, or model topology, but has no access to the defender’s parameters. The attacker could even potentially have access to a similar learned model with similar architecture but different parameters and weights. Grey box attacks incorporate adversarial training from white box attacks with transfer learning from black box, making defense against them a formidable task.
 
-\subsection{Attack Implementations}
+\subsection*{Attack Implementations}
 
 \paragraph{Fast Gradient Sign Method} \hspace{0pt} \\
 
@@ -237,7 +237,8 @@ Gaussian noise is a type of statistical noise that follows a bell curve, or norm
 
 \paragraph{Perlin Noise} \hspace{0pt} \\
 
-Invented by Ken Perlin in the 1980s, Perlin noise was originally used for computer generated effects to create textures and terrain without needing to be hand drawn. The noise allowed Perlin to make realistic looking digital art including clouds, landscapes, and textures found in nature like marble. Compared to Random noise, Perlin noise has an organic appearance due to its use of pseudo-random numbers that are naturally ordered (Shiffman).  As a result, the noise that appears in images is smooth and without unnatural looking bumps. This medium of data augmentation is useful for this specific project because the images being used are found in nature.
+Invented by Ken Perlin in the 1980s, Perlin noise was originally used for computer generated effects to create textures and terrain without needing to be hand drawn. The noise allowed Perlin to make realistic looking digital art including clouds, landscapes, and textures found in nature like marble. Compared to Random noise, Perlin noise has an organic appearance due to its use of pseudo-random numbers that are naturally ordered (Shiffman).  As a result, the noise that appears in images is smooth and without unnatural looking bumps. This medium of data augmentation is useful for this specific project because the images being used are found in nature. 
+
 
 \paragraph{Random Noise} \hspace{0pt} \\
 
@@ -245,7 +246,7 @@ Random noise attacks are a type of black box attack that seeks to disrupt machin
 
 \paragraph{Salt and Pepper Noise} \hspace{0pt} \\
 
-The addition of salt and pepper noise can serve as a simple and somewhat effective black box attack. Otherwise known as “impulse noise”, salt and pepper noise adds scattered black and white pixels causing sharp disturbances in images. Salt and pepper noise creates challenges when attempting to detect image edges, segment pixels, extract certain features, or in this case, recognize an image.  Research shows that proper adjustment of the parameters can result in a 100\% success rate of fooling a classifier with salt and pepper noise (Li, Xurong, et al., 2019).
+The addition of salt and pepper noise can serve as a simple and somewhat effective black box attack. Otherwise known as “impulse noise”, salt and pepper noise adds scattered black and white pixels causing sharp disturbances in images. Salt and pepper noise creates challenges when attempting to detect image edges, segment pixels, extract certain features, or in this case, recognize an image. Research shows that proper adjustment of the parameters can result in a 100\% success rate of fooling a classifier with salt and pepper noise (Li, Xurong, et al., 2019).
 
 \paragraph{UAP attack} \hspace{0pt} \\
 
@@ -258,7 +259,7 @@ The Carlini & Wagner (C&W) attack is an adversarial attack that aims at solving 
 
 DeepFool is a type of white box attack that looks at trying to find the smallest number of perturbations to an input image. It works by computing the gradient of the classifier’s output, with respect to the input. It then linearizes the classifier and finds the minimal amount of perturbations required to change the decision boundary. This causes the image to be perturbed, and the new image is fed back into the original model classifier. This process is iterated through however many times the user wants, and until the image is fooled. The attack has full access to the model, making the perturbations easy to optimize. DeepFool is known for its ability to make an image visually unchanged, making the attack a good way to fool a classifier model. However, since the perturbations are made through iterations, it can be computationally expensive and can take a lot of time.
 
-\section{Weight Optimization}
+\section*{Weight Optimization}
 
 \paragraph{Hill Climbing Optimization} \hspace{0pt} \\
 
@@ -276,7 +277,7 @@ Genetic optimization is an optimization algorithm that references natural evolut
 
 Simulated Annealing is a stochastic optimization algorithm, which is inspired by the annealing process. The annealing process is the heating and then slowly cooling of a material, to reduce the erosion and damage to its structural properties. The algorithm works in a similar way buy searching for an optimal solution, with the chance of accepting a not-as-good solution, similar to when the temperature decreases in annealing. In the context of adversarial attacks, an SA algorithm can be used to determine and combine the weights in a majority classifier. The SA algorithm will start with an initial combination of weights. It will then iteratively generate new combinations and evaluate the performance in fooling the classifier. It asses both the better combination and the worse combination with a certain probability. By iterating through this process, the algorithm will find the optimal combination of weights that maxims performance. One thing to note with SA is that it does not always find the global optimal value. This would mean a higher number of iterations would be required to have a better chance that it does find the global optimum.
 
-\section{Weighted Majority Classifier}
+\section*{Weighted Majority Classifier}
 
 A weighted majority classifier is a method that combines the predictions of multiple classifiers. Each classifier has a weight assigned to it, and the weighted sum of the individual classifier’s prediction determines the final classification. These weights are usually based on the classifier’s individual performance first, and then after it is evaluated and assigned a weight. The main goal is to achieve the highest accuracy by optimizing the weights and finding the best possible combinations of weights. In the context of adversarial attacks, the classifier is used to combine the results of the five attacks. Each attack has a weight assigned to it, and the weights are determined based on the performance of the individual attack.
 
@@ -297,8 +298,7 @@ Lendave, V. (2021, September 22). \textit{A guide to different types of noises a
 
 Li, X., Ji, S., Han, M., Ji, J., Ren, Z., Liu, Y., \& Wu, C. (2019). Adversarial examples versus cloud-based detectors: A black-box empirical study. \textit{IEEE Transactions on Dependable and Secure Computing, 18(4)}, 1933-1949.
 
-Shiffman, D. (n.d.). \textit{Perlin Noise}. Khan Academy. https://www.khanacademy.org/computing/computer-programming/programming-natural-simulations/programming-noise/a/perlin-noise
-
+Shiffman, D. (n.d.). \textit{Perlin Noise}. Khan Academy. https://www.khanacademy.org/computing/computer-programming/programming-natural-simulations/programming-noise/a/perlin-noise 
 \end{hangparas}
 
 \newquestion{Appendix A}
@@ -322,16 +322,156 @@ Our final solution for fooling the classifier is to run the PGD attack by itself
 \begin{center}
 \textbf{Appendix B: Testing, Verification, and Correctness}
 \end{center}
+\section*{Loop Invariant Analysis}
+
+\paragraph{PGD} \hspace{0pt} \\
+
+The primary loop invariant is that the perturbation of ''x\_adv'' stays within the range of ''epsilon'' for the duration of the loop. This holds true as the perturbation is clipped to the range between negative and positive epsilon (inclusive), which ensures that ''x\_adv'' stays in the allowed range.
+
+\paragraph{Optimize\_Weights} \hspace{0pt} \\
+
+The main loop invariant rely on the weights and the score. For each iteration, the weights vectors must contain non-negative values that sum to 1, ensuring that the weights remain valid throughout the algorithm. Also, the ''best\_score'' and ''best\_weights'' variables are updated whenever a higher score is discovered, ensuring that these variables always represent the highest discovered score throughout the process.
+\\
+Initialization: Before the loop starts, best\_weights is initialized to initial\_weights, and best\_score is initialized to -Inf. Here, no better weights and scores can be found, so the invariant holds.
+\\
+Maintenance: During each iteration, the function generates a new set of weights, creates an adversarial image using those weights, and evaluates the attack. If the new score is better than best\_score, the best\_weights and best\_score variables are updated. This ensures that at the beginning of the next iteration, the invariant still holds because the best weights and scores found are stored in those variables.
+\\
+Termination: When the loop terminates, the invariant holds because best\_weights and best\_score still store the best set of weights and the score found during the iterations. The function then returns the best\_weights, which is the output.
+
 
 \newquestion{Appendix C}
 \begin{center}
 \textbf{Appendix C: Runtime Complexity and Walltime}
 \end{center}
 
+\section*{Runtime Complexity}
+
+\paragraph{FGSM} \hspace{0pt} \\
+
+The with\_gradient function has a runtime complexity of O(m), where m is the number of parameters in the classifier model, which can be weights or biases. The perturbation calculation has a runtime complexity of O(n), where n is the number of pixels in the input image. Thus, the overall runtime complexity is O(m)+O(n).
+
+\paragraph{PGD} \hspace{0pt} \\
+
+The function loss\_function has a runtime complexity of O(m), and similar to FGSM, m is the number of parameters (weights or biases) in the classifier model. The overall complexity is O(40(m+n)), where 40 is the number of loop iterations, n is the number of pixels in the input image, and m is as previously defined.
+
+\paragraph{Gaussian Noise} \hspace{0pt} \\
+
+The rnorm function, array addition, and clipping the values in the noisy image to be between [0,1] all have a runtime complexity of O(n). Returning the noisy image has a runtime complexity of O(1). Therefore, the algorithm as a whole has a runtime complexity of O(n).
+
+\paragraph{Perlin Noise} \hspace{0pt} \\
+
+The dim, vector, and array functions have a complexity of O(n). The perlin noise function has a runtime complexity of O(2\textsuperscript{n}). Array multiplication has a runtime complexity of O(n\textsuperscript{2}) and array addition has a runtime complexity of O(n). Thus, the algorithm has an overall runtime complexity of O(2\textsuperscript{n}).
+
+\paragraph{Random Noise} \hspace{0pt} \\
+
+The runif, pmin, and pmax functions have a runtime complexity of O(n). Returning the noisy image has a runtime complexity of O(1). Thus, the algorithm as a whole has a runtime complexity of O(n).
+
+\paragraph{Weighted Majority Attack} \hspace{0pt} \\
+
+The weighted majority attack combines all of the attack functions, so the run time complexity for this would be the combination of all the attacks, plus clipping the values and combining the results. 
+\\
+FGSM runtime: O(m) + O(n)
+\\
+PGD runtime: O(40(m+n))
+\\
+Gaussian runtime: O(n)
+\\
+Random noise runtime:O(n)
+\\
+Clipping values: O(n)
+\\
+Combining adversarial results: O(n)
+\\
+In all of these, n is the number of pixels. Combining these, the overall runtime is O(5n + m + 40(m+n))
+
+\paragraph{Evaluate Attack} \hspace{0pt} \\
+
+The evaluate attack evaluates the effectiveness of the attacks.
+\\
+Get the model's predictions for adversarial image: O(m)
+\\
+Convert to numeric: O(1)
+\\
+Find the difference between adversarial and original: O(n) 
+\\
+Converting image to tensor: O(n)
+\\
+Evaluation of score: O(n)
+\\
+The over runtime for the evaluate attack function is O(3n + m), where m is the complexity of the model, and n is the number of pixels of the image.
+
+\paragraph{Optimize weights} \hspace{0pt} \\
+
+The optimize weights function takes in the initialized weights and optimizes them. The runtime would be the combination of the attacks, plus the iterations.
+\\
+Update weights: O(w)
+\\
+Normalize weights: O(w)
+\\
+iterations: O(1)
+\\
+Weighted majority attack function: O(5n + m + 40(m+n))
+\\
+Evaluate attack: O(3n + m)
+\\
+Combining these, the overall runtime is O(1*(2w + 8n + 2m + 40(m+n))). In this case, the number of iterations is 1, but the runtime can be increased based on the number of iterations. W is the length of the weights vector.
+
+\newquestion{Appendix C}
+
+\section*{Walltime}
+
+\begin{table}[h!]
+  \begin{center}
+    \label{tab:table1}
+    \begin{tabular}{|c|c|c|}
+    \hline
+      Algorithm & Grass Image* Walltime (sec/image) & Dandelion Image* Walltime (sec/image) \\
+      \hline
+      FGSM & 0.96 & 1.00\\ 
+      PGD** & 30 & 30\\
+      Gaussian Noise & 0.43 & 0.43\\
+      Perlin Noise & 0.25 & 0.23\\
+      Random Noise & 0.22 & 0.23\\
+      Weighted Majority*** & 120 & 120\\
+      \hline
+    \end{tabular}
+    \\
+  \end{center}
+\end{table}
+
+\setlength{\parindent}{0cm}
+*Walltime was taken by using all 49 given grass images and all 38 given dandelion images then dividing the time by number of images
+\\
+**Due to its long runtime, our runtime sample for PGD consisted of 3 images for grass and 3 images for dandelions; these are approximations
+\\
+***Due to its long runtime, we used the runtime of a single trial through the weighted majority algorithm for both dandelion and grass
+\setlength{\parindent}{default}
+
+
 \newquestion{Appendix D}
 \begin{center}
 \textbf{Appendix D: Performance}
 \end{center}
 
+\begin{table}[h!]
+  \begin{center}
+    \label{tab:table1}
+    \begin{tabular}{|c|c|c|}
+    \hline
+      Algorithm & Grass Image* Percent Fooled (\%) & Dandelion Image* Percent Fooled (\%) \\
+      \hline
+      FGSM & 2.0 & 100\\ 
+      PGD & 100 & 100\\
+      Gaussian Noise & 0 & 100\\
+      Perlin Noise & 0 & 37 \\
+      Random Noise & 0 & 5.2 \\
+      \hline
+    \end{tabular}
+    \\
+  \end{center}
+\end{table}
+
+\setlength{\parindent}{0cm}
+*Percent fooled was taken by using all 49 given grass images and all 38 given dandelion images then dividing the number fooled by number of images
 
 \end{document}
